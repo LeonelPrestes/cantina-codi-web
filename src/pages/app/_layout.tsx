@@ -3,9 +3,9 @@ import { Header } from "./components/header";
 
 export function AppLayout() {
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen px-4">
       <Header />
-      <main>
+      <main className="mt-20">
         <Outlet />
       </main>
     </div>

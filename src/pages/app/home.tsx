@@ -1,13 +1,8 @@
-import { Plus, Search } from "lucide-react";
+import { Search } from "lucide-react";
+import { CardProduct } from "@/components/card-product";
 import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { products } from "@/mock/data";
 
 export function Home() {
   return (
@@ -30,33 +25,24 @@ export function Home() {
         </div>
       </div>
 
+      <div>
+        <h2 className="text-xl font-semibold text-zinc-100">Categorias</h2>
+
+        <div className="flex items-center gap-3 overflow-x-auto py-2">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <Button variant="secondary" key={index}>{`Categoria ${
+              index + 1
+            }`}</Button>
+          ))}
+        </div>
+      </div>
+
       <div className="space-y-2">
         <h2 className="text-xl font-semibold text-zinc-100">Nossos Produtos</h2>
 
         <div className="grid grid-cols-2 gap-4">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <Card key={index} className="bg-zinc-900 border border-gray-700/30">
-              <CardHeader>
-                <CardTitle className="text-zinc-100">Produto {index}</CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                </CardDescription>
-              </CardHeader>
-
-              <CardContent>
-                <div className="flex md:items-center md:flex-row flex-col gap-2 justify-between">
-                  <p className="text-muted">R$ 99,99</p>
-
-                  <Button
-                    size="sm"
-                    className="bg-violet-400 text-xs font-semibold hover:bg-violet-500 cursor-pointer"
-                  >
-                    <Plus className="size-4" />
-                    <span>Adicionar</span>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+          {products.map((product) => (
+            <CardProduct key={product.id} product={product} />
           ))}
         </div>
         <Pagination

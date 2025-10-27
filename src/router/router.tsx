@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "@/pages/app/_layout";
+import { Cart } from "@/pages/app/cart";
+import { Checkout } from "@/pages/app/checkout";
 import { Home } from "@/pages/app/home";
-import { ProductDetails } from "@/pages/app/product-details";
 import { AuthLayout } from "@/pages/auth/_layout";
 import { SignIn } from "@/pages/auth/sign-in";
 import { SignUp } from "@/pages/auth/sign-up";
@@ -18,8 +19,12 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/produto-detalhes/:id",
-        element: <ProductDetails />,
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
     ],
   },
