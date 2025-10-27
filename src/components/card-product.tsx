@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface CardProductsProps {
   product: {
-    id: number;
+    id: string;
     name: string;
     price: number;
     image: string;
