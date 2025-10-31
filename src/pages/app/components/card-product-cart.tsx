@@ -25,10 +25,10 @@ export function CardProductCart({ product }: CardProductsCartProps) {
         />
 
         <div>
-          <h2 className="text-lg font-semibold text-zinc-100">
+          <h2 className="text-sm font-semibold text-zinc-100">
             {product.name}
           </h2>
-          <p className="text-zinc-400">R$ {product.price.toFixed(2)}</p>
+          <p className="text-xs">R$ {product.price.toFixed(2)}</p>
         </div>
       </div>
 
@@ -38,7 +38,7 @@ export function CardProductCart({ product }: CardProductsCartProps) {
             onClick={() => decrementItemCart(product)}
             size="icon-sm"
             variant="secondary"
-            className="bg-zinc-600 hover:bg-zinc-500 text-muted"
+            className="bg-zinc-700 text-white"
           >
             <Minus />
           </Button>
@@ -49,7 +49,7 @@ export function CardProductCart({ product }: CardProductsCartProps) {
             onClick={() => addToCart(product)}
             size="icon-sm"
             variant="secondary"
-            className="bg-zinc-600 hover:bg-zinc-500 text-muted"
+            className="bg-zinc-700 text-white"
           >
             <Plus />
           </Button>
@@ -59,7 +59,7 @@ export function CardProductCart({ product }: CardProductsCartProps) {
           onClick={() => removeAllQuantityOfItem(product.id)}
           size="icon-sm"
           variant="secondary"
-          className="bg-red-600 text-muted hover:bg-red-500"
+          className="bg-red-500 hover:bg-red-600 text-white"
         >
           <Trash2 />
         </Button>

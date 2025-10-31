@@ -31,7 +31,7 @@ export function Header() {
             <Button
               onClick={handleNavigateToCart}
               size="icon-sm"
-              className="bg-violet-400 hover:bg-violet-500 cursor-pointer relative"
+              className="bg-violet-400 hover:bg-violet-500 text-white cursor-pointer relative"
             >
               <ShoppingCart />
 
@@ -45,7 +45,7 @@ export function Header() {
             <DialogTrigger asChild>
               <Button
                 size="sm"
-                className="bg-violet-400 hover:bg-violet-500 cursor-pointer"
+                className="bg-violet-400 hover:bg-violet-500 text-white cursor-pointer"
               >
                 Login
               </Button>

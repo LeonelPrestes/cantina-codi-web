@@ -33,12 +33,14 @@ export function CardProduct({ product }: CardProductsProps) {
 
       <CardContent>
         <div className="flex md:items-center md:flex-row flex-col gap-2 justify-between">
-          <p className="text-muted">R$ {product.price.toFixed(2)}</p>
+          <p className="text-muted-foreground ">
+            R$ {product.price.toFixed(2)}
+          </p>
 
           <Button
             onClick={() => addToCart(product)}
             size="sm"
-            className="bg-violet-400 text-xs font-semibold hover:bg-violet-500 cursor-pointer"
+            className="bg-violet-400 text-xs font-semibold text-white hover:bg-violet-500 cursor-pointer"
           >
             <Plus className="size-4" />
             <span>Adicionar</span>

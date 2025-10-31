@@ -31,7 +31,7 @@ export function Cart() {
 
       <Card className="bg-zinc-900 border border-gray-700/30">
         <CardHeader>
-          <CardTitle className="text-muted">Resumo do pedido</CardTitle>
+          <CardTitle>Resumo do pedido</CardTitle>
           <CardDescription>
             Abaixo você pode ver o resumo do pedido
           </CardDescription>
@@ -54,7 +54,7 @@ export function Cart() {
         <CardFooter>
           <Button
             onClick={handleCheckout}
-            className="w-full bg-violet-500 text-zinc-100 font-bold py-3 rounded-md hover:bg-violet-600 transition-colors"
+            className="w-full bg-violet-500 hover:bg-violet-600 text-zinc-100 font-bold py-3 rounded-md cursor-pointer"
           >
             Finalizar Pedido
           </Button>

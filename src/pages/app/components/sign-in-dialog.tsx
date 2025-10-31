@@ -40,7 +40,7 @@ export function SignInDialog() {
             />
           </div>
 
-          <Button className="w-full bg-violet-500 hover:bg-violet-600 font-bold cursor-pointer">
+          <Button className="w-full bg-violet-400 hover:bg-violet-500 text-white font-bold cursor-pointer">
             Entrar
           </Button>
         </form>

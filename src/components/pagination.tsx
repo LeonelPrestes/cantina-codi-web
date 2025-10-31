@@ -27,12 +27,12 @@ export function Pagination({
       </span>
 
       <div className="flex items-center space-x-6 lg:space-x-8">
-        <span className="flex items-center justify-center font-medium text-xs">
+        <span className="flex items-center text-muted-foreground justify-center font-medium text-xs">
           Página {pageIndex + 1} de {totalPages}
         </span>
         <div className="flex items-center space-x-2">
           <Button
-            className="hidden h-8 w-8 p-0 lg:flex"
+            className="hidden bg-zinc-700 text-white h-8 w-8 p-0 lg:flex"
             onClick={() => onPageChange(0)}
             disabled={pageIndex === 0}
           >
@@ -40,7 +40,7 @@ export function Pagination({
             <ChevronsLeft className="h-4 w-4" />
           </Button>
           <Button
-            className="h-8 w-8 p-0"
+            className="bg-zinc-700 text-white h-8 w-8 p-0"
             onClick={() => onPageChange(pageIndex - 1)}
             disabled={pageIndex === 0}
           >
@@ -48,7 +48,7 @@ export function Pagination({
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
-            className="h-8 w-8 p-0"
+            className="bg-zinc-700 text-white h-8 w-8 p-0"
             onClick={() => onPageChange(pageIndex + 1)}
             disabled={totalPages <= pageIndex + 1}
           >
@@ -56,7 +56,7 @@ export function Pagination({
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
-            className="hidden h-8 w-8 p-0 lg:flex"
+            className="hidden bg-zinc-700 text-white h-8 w-8 p-0 lg:flex"
             onClick={() => onPageChange(totalPages - 1)}
             disabled={totalPages <= pageIndex + 1}
           >
