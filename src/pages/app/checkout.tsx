@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createOrder } from "@/api/create-orders";
+import { createPreference } from "@/api/create-preference";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,36 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCart } from "@/context/cart-context";
 
-async function createOrder(body: {
-  userName: string;
-  userEmail: string;
-  items: { productId: string; quantity: number }[];
-}) {
-  const res = await fetch("http://localhost:8080/orders", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  const data = await res.json().catch(() => null);
-  if (!res.ok) throw new Error(data?.error ?? `Erro ao criar pedido (HTTP ${res.status})`);
-
-  return data as { message: string; external_reference: string };
-}
-
-async function createPreference(external_reference: string) {
-  const res = await fetch("http://localhost:8080/payments", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ external_reference }),
-  });
-
-  const data = await res.json().catch(() => null);
-  if (!res.ok) throw new Error(data?.error ?? `Erro ao criar pagamento (HTTP ${res.status})`);
-
-  return data as { preference_id: string; init_point: string; external_reference: string };
-}
-
 export function Checkout() {
   const { cart, totalCart } = useCart();
   const navigate = useNavigate();
@@ -55,7 +27,6 @@ export function Checkout() {
     () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.trim()),
     [userEmail]
   );
-  console.log(cart)
 
   const canPay =
     cart.length > 0 && userName.trim().length >= 2 && emailOk && !loading;

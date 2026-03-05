@@ -1,22 +1,59 @@
-type CreatePreferenceResponse = {
-    preference_id: string;
-    init_point: string;
-    external_reference: string;
-}
+import { z } from "zod";
 
-export async function createPreference(external_reference: string) {
-    const response = await fetch("http://localhost:8080/payments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ external_reference }),
-    });
+const API_URL =
+  (import.meta as any)?.env?.VITE_API_URL?.toString() ?? "http://localhost:8080";
 
-    const data = await response.json().catch(() => null);
-    if (!response.ok) {
-        throw new Error(
-            data?.error ?? `Erro ao criar preferência de pagamento (HTTP ${response.status})`
-        )
-    } 
+const createPreferenceBodySchema = z.object({
+  external_reference: z.string(),
+});
 
-    return data as CreatePreferenceResponse;
+const createPreferenceResponseSchema = z.object({
+  preference_id: z.string(),
+  init_point: z.string(),
+  external_reference: z.string(),
+});
+
+const apiErrorSchema = z.object({
+  error: z.string(),
+});
+
+export type CreatePreferenceBody = z.infer<typeof createPreferenceBodySchema>;
+export type CreatePreferenceResponse = z.infer<typeof createPreferenceResponseSchema>;
+
+export async function createPreference(
+  external_reference: string
+): Promise<CreatePreferenceResponse> {
+
+  // valida body antes de enviar
+  const parsedBody = createPreferenceBodySchema.parse({
+    external_reference,
+  });
+
+  const response = await fetch(`${API_URL}/payments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(parsedBody),
+  });
+
+  const raw = await response.json().catch(() => null);
+
+  // tratamento de erro padronizado
+  if (!response.ok) {
+    const parsedError = apiErrorSchema.safeParse(raw);
+
+    const message = parsedError.success
+      ? parsedError.data.error
+      : `Erro ao criar preferência de pagamento (HTTP ${response.status})`;
+
+    throw new Error(message);
+  }
+
+  // valida resposta da API
+  const parsedResponse = createPreferenceResponseSchema.safeParse(raw);
+
+  if (!parsedResponse.success) {
+    throw new Error("Resposta da API inválida (formato inesperado).");
+  }
+
+  return parsedResponse.data;
 }
