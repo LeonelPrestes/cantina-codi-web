@@ -3,7 +3,7 @@ import { createOrder } from "@/api/create-orders";
 import { createPreference } from "@/api/create-preference";
 import { Button } from "./ui/button";
 
-type CartItem = { productID: string; quantity: number };
+type CartItem = { productId: string; quantity: number };
 
 export function CheckoutButton({ cartItems }: { cartItems: CartItem[] }) {
     const [loading, setIsLoading] = useState(false);
