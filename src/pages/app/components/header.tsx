@@ -1,11 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCart } from "@/context/cart-context";
-import { SignInDialog } from "./sign-in-dialog";
-import { SignUpDialog } from "./sign-up-dialog";
 
 export function Header() {
   const { cart } = useCart();

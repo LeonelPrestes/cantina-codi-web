@@ -1,4 +1,6 @@
+import { Fragment, useEffect, useState } from "react";
 import { Pagination } from "@/components/pagination";
+import { getAllProducts, type Product } from "@/api/get-all-products";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -8,15 +10,49 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { products } from "@/mock/data";
 import { PenBoxIcon, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 export function Dashboard() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [pageIndex, setPageIndex] = useState(0);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        setIsLoading(true);
+
+        const data = await getAllProducts({ pageIndex });
+
+        setProducts(data.products);
+        setTotalProducts(data.metas.totalProducts);
+        setTotalPages(Math.max(data.metas.totalPages, 1));
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "Erro ao buscar produtos.";
+        toast.error(message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchProducts();
+  }, [pageIndex]);
+
+  function handlePageChange(nextPageIndex: number) {
+    if (nextPageIndex < 0 || nextPageIndex >= totalPages) return;
+    setPageIndex(nextPageIndex);
+  }
+
   return (
     <div className="max-w-xl w-full mx-auto">
       <h1 className="text-2xl font-bold text-zinc-100">Dashboard</h1>
       <p className="text-zinc-400">
-        Aqui você pode gerenciar os produtos, categorias e pedidos da cantina.
+        Aqui voce pode gerenciar os produtos da cantina.
       </p>
 
       <div>
@@ -24,11 +60,11 @@ export function Dashboard() {
       </div>
 
       <div className="flex items-center gap-3 overflow-x-auto py-2">
-        <Button className="bg-zinc-900 hover:bg-zinc-800 text-muted-foreground p-2 rounded-md border border-gray-700/30">
-          Criar Produto
-        </Button>
-        <Button className="bg-zinc-900 hover:bg-zinc-800 text-muted-foreground p-2 rounded-md border border-gray-700/30">
-          Criar Categorias
+        <Button
+          asChild
+          className="bg-zinc-900 hover:bg-zinc-800 text-muted-foreground p-2 rounded-md border border-gray-700/30"
+        >
+          <Link to="/dashboard/create-product">Criar Produto</Link>
         </Button>
       </div>
 
@@ -36,45 +72,77 @@ export function Dashboard() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead></TableHead>
+              <TableHead className="w-20"></TableHead>
               <TableHead>Nome</TableHead>
-              <TableHead>Estoque</TableHead>
-              <TableHead>Preço</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
+              <TableHead>Qnt</TableHead>
+              <TableHead>Preco</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {products.map((product) => (
-              <TableRow key={product.id}>
-                <TableCell>
-                  <img
-                    className="size-10 rounded-2xl object-cover"
-                    src={product.image}
-                    alt=""
-                  />
-                </TableCell>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>{product.stock}</TableCell>
-                <TableCell>R$ {product.price.toFixed(2)}</TableCell>
-                <TableCell className="text-right">
-                  <Button variant="outline" size="sm" className="mr-2">
-                    <PenBoxIcon />
-                  </Button>
-                  <Button variant="destructive" size="sm">
-                    <Trash2 />
-                  </Button>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center text-zinc-400">
+                  Carregando produtos...
                 </TableCell>
               </TableRow>
-            ))}
+            )}
+
+            {!isLoading && products.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center text-zinc-400">
+                  Nenhum produto encontrado.
+                </TableCell>
+              </TableRow>
+            )}
+
+            {!isLoading &&
+              products.map((product) => (
+                <Fragment key={product.id}>
+                  <TableRow className="border-b-0 hover:bg-transparent">
+                    <TableCell rowSpan={2} className="align-top">
+                      <div className="h-16 w-16 min-w-16 overflow-hidden rounded-xl bg-zinc-800">
+                        <img
+                          className="h-full w-full object-cover object-center"
+                          src={product.imageUrl || "/logo.jpeg"}
+                          alt={product.name}
+                        />
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-medium">{product.name}</TableCell>
+                    <TableCell>{product.stock}</TableCell>
+                    <TableCell>R$ {product.price.toFixed(2)}</TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell colSpan={3} className="pt-0">
+                      <div className="flex items-center gap-2">
+                        <Button asChild variant="outline" size="sm">
+                          <Link
+                            to={`/dashboard/update-product/${product.id}`}
+                            state={{ product }}
+                          >
+                            <PenBoxIcon />
+                            Editar
+                          </Link>
+                        </Button>
+                        <Button variant="destructive" size="sm">
+                          <Trash2 />
+                          Excluir
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                </Fragment>
+              ))}
           </TableBody>
         </Table>
 
         <Pagination
-          onPageChange={() => {}}
-          pageIndex={0}
-          totalPages={1}
-          totalProducts={4}
+          onPageChange={handlePageChange}
+          pageIndex={pageIndex}
+          totalPages={totalPages}
+          totalProducts={totalProducts}
         />
       </div>
     </div>
