@@ -17,15 +17,15 @@ export function CardProduct({ product }: CardProductsProps) {
   const { addToCart } = useCart();
 
   return (
-    <Card className="bg-zinc-900 border border-gray-700/30">
+    <Card className="bg-white border-gray-700/30 shadow-amber-50">
       <CardHeader>
-        <div className="flex gap-2">
+        <div className="flex flex-col items-center gap-2 text-center min-h-34 ">
           <img
-            className="size-14 rounded-xl object-cover"
+            className="size-20 rounded-xl object-cover"
             src={product.image}
             alt=""
           />
-          <CardTitle className="text-zinc-100 text-sm flex-1">
+          <CardTitle className="text-gray-900 text-base flex-1">
             {product.name}
           </CardTitle>
         </div>
@@ -33,17 +33,17 @@ export function CardProduct({ product }: CardProductsProps) {
 
       <CardContent>
         <div className="flex md:items-center md:flex-row flex-col gap-2 justify-between">
-          <p className="text-muted-foreground ">
+          <p className="text-muted-foreground text-lg">
             R$ {product.price.toFixed(2)}
           </p>
 
           <Button
             onClick={() => addToCart(product)}
             size="sm"
-            className="bg-violet-400 text-xs font-semibold text-white hover:bg-violet-500 cursor-pointer"
+            className="bg-primary text-xs font-semibold text-white hover:bg-primary-hover cursor-pointer"
           >
             <Plus className="size-4" />
-            <span>Adicionar</span>
+            <span className="text-base">Adicionar</span>
           </Button>
         </div>
       </CardContent>

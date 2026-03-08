@@ -48,7 +48,18 @@ export function Checkout() {
       });
 
       // 2) cria a preference no MP
-      const pref = await createPreference(order.external_reference);
+      const pref = await createPreference({
+        external_reference: order.external_reference,
+        items: [
+          {
+            id: "1",
+            title: "Coxinha",
+            quantity: 2,
+            currency_id: "BRL",
+            unit_price: 8,
+          },
+        ],
+      });
 
       // 3) redireciona pro init_point
       window.location.href = pref.init_point;
@@ -78,12 +89,12 @@ export function Checkout() {
   }
 
   return (
-    <div className="max-w-xl w-full mx-auto space-y-5">
+    <div className="max-w-xl w-full mx-auto space-y-5 ">
       <h1 className="text-2xl font-bold text-zinc-100">Checkout</h1>
 
       <Card className="bg-zinc-900 border border-gray-700/30">
         <CardHeader>
-          <CardTitle>Dados do comprador</CardTitle>
+          <CardTitle className="text-zinc-100">Dados do comprador</CardTitle>
           <CardDescription>
             O comprovante será enviado para este e-mail após o pagamento ser aprovado.
           </CardDescription>
@@ -97,6 +108,7 @@ export function Checkout() {
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
               placeholder="Seu nome"
+              className="text-zinc-100"
             />
           </div>
 
@@ -108,6 +120,7 @@ export function Checkout() {
               onChange={(e) => setUserEmail(e.target.value)}
               placeholder="seuemail@exemplo.com"
               inputMode="email"
+              className="text-zinc-100"
             />
             {!emailOk && userEmail.length > 0 && (
               <p className="text-sm text-red-400">Digite um e-mail válido.</p>
@@ -134,7 +147,7 @@ export function Checkout() {
             {loading ? "Criando pagamento..." : "Pagar com Mercado Pago"}
           </Button>
 
-          <Button variant="ghost" onClick={() => navigate("/cart")} className="w-full">
+          <Button variant="ghost" onClick={() => navigate("/cart")} className="w-full text-zinc-100 bg-zinc-800 hover:bg-zinc-900">
             Voltar para o carrinho
           </Button>
         </CardFooter>

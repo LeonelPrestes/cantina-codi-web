@@ -24,7 +24,7 @@ export function Home() {
       <div className="space-y-2">
         <h2 className="text-xl font-semibold text-zinc-100">Nossos Produtos</h2>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 bg-zinc-900 p-2 rounded-2xl">
           {products.map((product) => (
             <CardProduct
               key={product.id}
@@ -39,12 +39,12 @@ export function Home() {
           ))}
         </div>
 
-        <Pagination
+        {/* <Pagination
           pageIndex={0}
           totalProducts={100}
           totalPages={10}
           onPageChange={() => { }}
-        />
+        /> */}
         
       </div>
     </div>

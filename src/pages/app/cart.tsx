@@ -31,7 +31,7 @@ export function Cart() {
 
       <Card className="bg-zinc-900 border border-gray-700/30">
         <CardHeader>
-          <CardTitle>Resumo do pedido</CardTitle>
+          <CardTitle className="text-white" >Resumo do pedido</CardTitle>
           <CardDescription>
             Abaixo você pode ver o resumo do pedido
           </CardDescription>

@@ -3,8 +3,17 @@ import { z } from "zod";
 const API_URL =
   (import.meta as any)?.env?.VITE_API_URL?.toString() ?? "http://localhost:8080";
 
+const preferenceItemSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  quantity: z.number(),
+  currency_id: z.string(),
+  unit_price: z.number(),
+});
+
 const createPreferenceBodySchema = z.object({
   external_reference: z.string(),
+  items: z.array(preferenceItemSchema),
 });
 
 const createPreferenceResponseSchema = z.object({
@@ -21,13 +30,9 @@ export type CreatePreferenceBody = z.infer<typeof createPreferenceBodySchema>;
 export type CreatePreferenceResponse = z.infer<typeof createPreferenceResponseSchema>;
 
 export async function createPreference(
-  external_reference: string
+  body: CreatePreferenceBody
 ): Promise<CreatePreferenceResponse> {
-
-  // valida body antes de enviar
-  const parsedBody = createPreferenceBodySchema.parse({
-    external_reference,
-  });
+  const parsedBody = createPreferenceBodySchema.parse(body);
 
   const response = await fetch(`${API_URL}/payments`, {
     method: "POST",
@@ -37,7 +42,6 @@ export async function createPreference(
 
   const raw = await response.json().catch(() => null);
 
-  // tratamento de erro padronizado
   if (!response.ok) {
     const parsedError = apiErrorSchema.safeParse(raw);
 
@@ -48,7 +52,6 @@ export async function createPreference(
     throw new Error(message);
   }
 
-  // valida resposta da API
   const parsedResponse = createPreferenceResponseSchema.safeParse(raw);
 
   if (!parsedResponse.success) {

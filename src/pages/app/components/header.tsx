@@ -16,9 +16,9 @@ export function Header() {
       <div className="max-w-xl w-full mx-auto flex items-center justify-between">
         <Link to="/">
           <img
-            className="size-8 rounded-full"
+            className="size-12 rounded-full"
             src="/logo.jpeg"
-            alt="Logo Codi Academy"
+            alt="Logo Codi Academy" 
           />
         </Link>
 
@@ -26,10 +26,10 @@ export function Header() {
           {cart.length > 0 && (
             <Button
               onClick={handleNavigateToCart}
-              size="icon-sm"
-              className="bg-violet-400 hover:bg-violet-500 text-white cursor-pointer relative"
+
+              className="w-12 h-12 rounded-full bg-primary hover:bg-primary-hover text-white cursor-pointer relative"
             >
-              <ShoppingCart />
+              <ShoppingCart className="w-7! h-7!" />
 
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                 {cart.length}
