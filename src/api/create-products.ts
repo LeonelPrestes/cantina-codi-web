@@ -13,7 +13,7 @@ const createProductBodySchema = z.object({
   description: z.string(),
   price: z.number().positive(),
   stock: z.number().int().nonnegative(),
-  imageUrl: z.string().url(),
+  imageUrl: z.url(),
 });
 
 const createProductResponseSchema = z.object({
