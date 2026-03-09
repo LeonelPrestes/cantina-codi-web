@@ -21,7 +21,8 @@ const createProductResponseSchema = z.object({
 });
 
 const apiErrorSchema = z.object({
-  error: z.string(),
+  message: z.string().optional(),
+  error: z.string().optional(),
 });
 
 export type CreateProductBody = z.infer<typeof createProductBodySchema>;
@@ -35,6 +36,7 @@ export async function createProduct(
   const response = await fetch(`${API_URL}/products`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(parsedBody),
   });
 
@@ -43,7 +45,7 @@ export async function createProduct(
   if (!response.ok) {
     const parsedError = apiErrorSchema.safeParse(raw);
     const message = parsedError.success
-      ? parsedError.data.error
+      ? parsedError.data.message ?? parsedError.data.error
       : `Erro ao criar produto (HTTP ${response.status})`;
 
     throw new Error(message);

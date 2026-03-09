@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import { AppLayout } from "@/pages/app/_layout";
 import { Home } from "@/pages/app/home";
 import { CreateProduct } from "@/pages/dashboard/create-product";
@@ -7,9 +7,24 @@ import { Dashboard } from "@/pages/dashboard/dashboard";
 import { UpdateProducts } from "@/pages/dashboard/update-products";
 import { Cart } from "@/pages/app/cart";
 import { Checkout } from "@/pages/app/checkout";
-// import { AuthLayout } from "@/pages/auth/_layout";
-// import { SignIn } from "@/pages/auth/sign-in";
+import { AuthLayout } from "@/pages/auth/_layout";
+import { SignIn } from "@/pages/auth/sign-in";
+import { getProfile } from "@/api/get-profile";
 // import { SignUp } from "@/pages/auth/sign-up";
+
+async function requireAuthLoader() {
+  try {
+    const { user } = await getProfile();
+
+    if (!user) {
+      throw new Error("Nao autenticado");
+    }
+
+    return null;
+  } catch {
+    return redirect("/auth/sign-in");
+  }
+}
 
 export const router = createBrowserRouter([
   {
@@ -31,24 +46,25 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // {
-  //   path: "/auth",
-  //   element: <AuthLayout />,
-  //   children: [
-  //     {
-  //       path: "/auth/sign-in",
-  //       element: <SignIn />,
-  //     },
-  //     {
-  //       path: "/auth/sign-up",
-  //       element: <SignUp />,
-  //     },
-  //   ],
-  // },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/auth/sign-in",
+        element: <SignIn />,
+      },
+      // {
+      //   path: "/auth/sign-up",
+      //   element: <SignUp />,
+      // },
+    ],
+  },
 
   {
     path: "/dashboard",
     element: <DashLayout />,
+    loader: requireAuthLoader,
     children: [
       {
         path: "/dashboard",

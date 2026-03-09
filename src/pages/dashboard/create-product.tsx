@@ -86,15 +86,15 @@ export function CreateProduct() {
   }
 
   return (
-    <div className="max-w-xl w-full mx-auto space-y-5">
+    <div className="max-w-xl w-full mx-auto space-y-5 text-zinc-100">
       <div className="space-y-1">
-        <h1 className="text-2xl font-bold text-zinc-100">Cadastrar Produto</h1>
+        <h1 className="text-2xl font-bold">Cadastrar Produto</h1>
         <p className="text-zinc-400">
           Preencha os dados abaixo para adicionar um novo item ao cardapio.
         </p>
       </div>
 
-      <Card className="bg-zinc-900 border border-gray-700/30">
+      <Card className="bg-zinc-900 border border-gray-700/30 text-zinc-100">
         <CardHeader>
           <CardTitle>Novo produto</CardTitle>
           <CardDescription>
@@ -105,7 +105,7 @@ export function CreateProduct() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-zinc-200">
+              <Label htmlFor="name">
                 Nome
               </Label>
               <Input
@@ -117,7 +117,7 @@ export function CreateProduct() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description" className="text-zinc-200">
+              <Label htmlFor="description">
                 Descricao
               </Label>
               <Textarea
@@ -130,7 +130,7 @@ export function CreateProduct() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="imageUrl" className="text-zinc-200">
+              <Label htmlFor="imageUrl">
                 URL da imagem
               </Label>
               <Input
@@ -147,7 +147,7 @@ export function CreateProduct() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="price" className="text-zinc-200">
+                <Label htmlFor="price">
                   Preco
                 </Label>
                 <Input
@@ -160,7 +160,7 @@ export function CreateProduct() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="stock" className="text-zinc-200">
+                <Label htmlFor="stock">
                   Estoque
                 </Label>
                 <Input
@@ -179,7 +179,7 @@ export function CreateProduct() {
               <Button
                 type="submit"
                 disabled={!canSubmit}
-                className="w-full bg-violet-500 hover:bg-violet-600 text-zinc-100 font-bold py-3 rounded-md cursor-pointer"
+                className="w-full bg-violet-500 hover:bg-violet-600 font-bold py-3 rounded-md cursor-pointer text-white"
               >
                 {isSubmitting ? "Salvando..." : "Salvar produto"}
               </Button>

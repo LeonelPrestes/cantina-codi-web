@@ -20,7 +20,8 @@ const updateProductResponseSchema = z.object({
 });
 
 const apiErrorSchema = z.object({
-  error: z.string(),
+  message: z.string().optional(),
+  error: z.string().optional(),
 });
 
 export type UpdateProductBody = z.infer<typeof updateProductBodySchema>;
@@ -36,6 +37,7 @@ export async function updateProduct(
   const response = await fetch(`${API_URL}/products/${parsedParams.productId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(parsedBody),
   });
 
@@ -44,7 +46,7 @@ export async function updateProduct(
   if (!response.ok) {
     const parsedError = apiErrorSchema.safeParse(raw);
     const message = parsedError.success
-      ? parsedError.data.error
+      ? parsedError.data.message ?? parsedError.data.error
       : `Erro ao atualizar produto (HTTP ${response.status})`;
 
     throw new Error(message);
