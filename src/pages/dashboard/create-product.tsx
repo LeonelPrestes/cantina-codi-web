@@ -29,6 +29,7 @@ function isValidUrl(value: string) {
   }
 }
 
+
 export function CreateProduct() {
   const navigate = useNavigate();
 
