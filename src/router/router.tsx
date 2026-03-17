@@ -34,10 +34,12 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+        hydrateFallbackElement: <div>Carregando...</div>
       },
       {
         path: "/cart",
         element: <Cart />,
+        hydrateFallbackElement: <div>Carregando...</div>
       },
       {
         path: "/checkout",
@@ -65,6 +67,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashLayout />,
     loader: requireAuthLoader,
+    hydrateFallbackElement: <div>Carregando...</div>,
     children: [
       {
         path: "/dashboard",
