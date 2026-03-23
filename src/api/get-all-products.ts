@@ -1,10 +1,11 @@
 import { z } from "zod";
 
+
 /**
  * Base URL da API
  */
 const API_URL =
-  (import.meta as any)?.env?.VITE_API_URL?.toString() ?? "http://localhost:8080";
+  (import.meta as any).env.VITE_API_URL?.toString();
 
 /**
  * Schemas
@@ -69,7 +70,6 @@ export async function getAllProducts(
 
   const response = await fetch(`${API_URL}/products?${params.toString()}`, {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
   });
 
   const raw = await response.json().catch(() => null);

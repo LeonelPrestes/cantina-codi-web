@@ -49,16 +49,7 @@ export function Checkout() {
 
       // 2) cria a preference no MP
       const pref = await createPreference({
-        external_reference: order.external_reference,
-        items: [
-          {
-            id: "1",
-            title: "Coxinha",
-            quantity: 2,
-            currency_id: "BRL",
-            unit_price: 8,
-          },
-        ],
+        external_reference: order.external_reference
       });
 
       // 3) redireciona pro init_point

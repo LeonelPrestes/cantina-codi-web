@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { CardProduct } from "@/components/card-product";
-import { Pagination } from "@/components/pagination";
+import { CardProduct } from "@/components/card-product"
 import { getAllProducts, type Product } from "@/api/get-all-products";
 
 export function Home() {

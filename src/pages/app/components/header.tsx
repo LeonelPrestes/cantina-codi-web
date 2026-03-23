@@ -2,6 +2,8 @@ import { ShoppingCart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-context";
+import  logo  from "../../../../public/logo.jpeg"
+
 
 export function Header() {
   const { cart } = useCart();
@@ -17,7 +19,7 @@ export function Header() {
         <Link to="/">
           <img
             className="size-12 rounded-full"
-            src="/logo.jpeg"
+            src={logo}
             alt="Logo Codi Academy" 
           />
         </Link>

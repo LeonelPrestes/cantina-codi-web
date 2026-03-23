@@ -82,5 +82,11 @@ export const router = createBrowserRouter([
         element: <UpdateProducts />,
       },
     ],
+
   },
-]);
+],
+  {
+    basename: "/cantina/",
+
+  }
+);

@@ -20,7 +20,9 @@ export function CheckoutButton({ cartItems }: { cartItems: CartItem[] }) {
                 userEmail,
                 items: cartItems
             })
-            const preference = await createPreference(order.external_reference)
+            const preference = await createPreference({
+                external_reference: order.external_reference
+            })
             window.location.href = preference.init_point;
         } catch (error) {
             alert(error instanceof Error ? error.message : "Erro desconhecido ao processar o checkout.");

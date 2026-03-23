@@ -3,17 +3,10 @@ import { z } from "zod";
 const API_URL =
   (import.meta as any)?.env?.VITE_API_URL?.toString() ?? "http://localhost:8080";
 
-const preferenceItemSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  quantity: z.number(),
-  currency_id: z.string(),
-  unit_price: z.number(),
-});
+
 
 const createPreferenceBodySchema = z.object({
-  external_reference: z.string(),
-  items: z.array(preferenceItemSchema),
+  external_reference: z.string()
 });
 
 const createPreferenceResponseSchema = z.object({
