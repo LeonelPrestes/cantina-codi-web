@@ -1,16 +1,14 @@
 import { z } from "zod";
 
-
 /**
  * Base URL da API
  */
 const API_URL =
-  (import.meta as any).env.VITE_API_URL?.toString();
+  (import.meta as any)?.env?.VITE_API_URL?.toString() ?? "http://localhost:8080";
 
 /**
  * Schemas
  */
-
 const productSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -30,12 +28,14 @@ const getAllProductsResponseSchema = z.object({
   metas: metasSchema,
 });
 
+const getAllProductsLegacyResponseSchema = z.array(productSchema);
+
 const apiErrorSchema = z.object({
   error: z.string(),
 });
 
 /**
- * Query schema (opcional, mas mantém padrão e evita mandar coisa errada)
+ * Query schema (opcional, mas mantem o padrao e evita mandar coisa errada)
  * - pageIndex default 0
  * - name opcional
  */
@@ -52,18 +52,16 @@ export type GetAllProductsResponse = z.infer<typeof getAllProductsResponseSchema
 export type GetAllProductsQuery = z.infer<typeof getAllProductsQuerySchema>;
 
 /**
- * Função de API: Get All Products
+ * Funcao de API: Get All Products
  */
 export async function getAllProducts(
   query?: Partial<GetAllProductsQuery>
 ): Promise<GetAllProductsResponse> {
-  // 1) valida/normaliza query (aplica default)
   const parsedQuery = getAllProductsQuerySchema.parse({
     pageIndex: query?.pageIndex ?? 0,
     name: query?.name?.trim() || undefined,
   });
 
-  // 2) monta querystring (não manda name vazio)
   const params = new URLSearchParams();
   params.set("pageIndex", String(parsedQuery.pageIndex));
   if (parsedQuery.name) params.set("name", parsedQuery.name);
@@ -74,7 +72,6 @@ export async function getAllProducts(
 
   const raw = await response.json().catch(() => null);
 
-  // 3) erro padronizado
   if (!response.ok) {
     const parsedError = apiErrorSchema.safeParse(raw);
 
@@ -85,11 +82,22 @@ export async function getAllProducts(
     throw new Error(message);
   }
 
-  // 4) valida resposta
   const parsedResponse = getAllProductsResponseSchema.safeParse(raw);
-  if (!parsedResponse.success) {
-    throw new Error("Resposta da API inválida (formato inesperado).");
+  if (parsedResponse.success) {
+    return parsedResponse.data;
   }
 
-  return parsedResponse.data;
+  const parsedLegacyResponse = getAllProductsLegacyResponseSchema.safeParse(raw);
+  if (parsedLegacyResponse.success) {
+    return {
+      products: parsedLegacyResponse.data,
+      metas: {
+        totalProducts: parsedLegacyResponse.data.length,
+        totalPages: parsedLegacyResponse.data.length > 0 ? 1 : 0,
+      },
+    };
+  }
+
+  console.error("Payload inesperado em /products:", raw);
+  throw new Error("Resposta da API invalida (formato inesperado).");
 }
