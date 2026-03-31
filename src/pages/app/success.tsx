@@ -6,9 +6,9 @@ export function Success() {
     <PaymentStatusView
       badgeLabel="Pagamento aprovado"
       title="Pedido confirmado com sucesso"
-      description="Recebemos a confirmacao do seu pagamento. Seu pedido ja pode seguir para separacao e entrega."
+      description="Recebemos a confirmacao do seu pagamento."
       details={[
-        "Guarde as informacoes do pedido para acompanhar qualquer confirmacao futura.",
+        "Pode retirar seu pedido na nossa cantina",
         "Se precisar fazer uma nova compra, voce pode voltar para a loja a qualquer momento.",
       ]}
       icon={CheckCircle2}

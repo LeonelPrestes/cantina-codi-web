@@ -8,7 +8,6 @@ export function Pending() {
       title="Seu pagamento esta em analise"
       description="A transacao foi iniciada, mas ainda depende de confirmacao do Mercado Pago. Assim que houver atualizacao, o status sera alterado."
       details={[
-        "Se o pagamento foi por boleto ou transferencia, a compensacao pode levar algum tempo.",
         "Evite criar outro pedido agora para nao gerar cobrancas duplicadas sem necessidade.",
       ]}
       icon={Clock3}
