@@ -7,8 +7,11 @@ import { Dashboard } from "@/pages/dashboard/dashboard";
 import { UpdateProducts } from "@/pages/dashboard/update-products";
 import { Cart } from "@/pages/app/cart";
 import { Checkout } from "@/pages/app/checkout";
+import { Failure } from "@/pages/app/failure";
 import { AuthLayout } from "@/pages/auth/_layout";
+import { Pending } from "@/pages/app/pending";
 import { SignIn } from "@/pages/auth/sign-in";
+import { Success } from "@/pages/app/success";
 import { getProfile } from "@/api/get-profile";
 // import { SignUp } from "@/pages/auth/sign-up";
 
@@ -44,6 +47,18 @@ export const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "/success",
+        element: <Success />,
+      },
+      {
+        path: "/failure",
+        element: <Failure />,
+      },
+      {
+        path: "/pending",
+        element: <Pending />,
       },
     ],
   },
