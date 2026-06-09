@@ -66,6 +66,13 @@ export function Dashboard() {
         >
           <Link to="/dashboard/create-product">Criar Produto</Link>
         </Button>
+        
+        <Button
+          asChild
+          className="bg-zinc-900 hover:bg-zinc-800 text-muted-foreground p-2 rounded-md border border-gray-700/30"
+        >
+          <Link to="/dashboard/create-coupon">Criar Cupom</Link>
+        </Button>
       </div>
 
       <div>

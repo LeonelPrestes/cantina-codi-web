@@ -13,6 +13,7 @@ import { Pending } from "@/pages/app/pending";
 import { SignIn } from "@/pages/auth/sign-in";
 import { Success } from "@/pages/app/success";
 import { getProfile } from "@/api/get-profile";
+import { CreateCoupon } from "@/pages/dashboard/create-coupon";
 // import { SignUp } from "@/pages/auth/sign-up";
 
 async function requireAuthLoader() {
@@ -60,6 +61,11 @@ export const router = createBrowserRouter([
         path: "/pending",
         element: <Pending />,
       },
+      {
+        path: "dasboard/create-coupon",
+        element: <CreateCoupon />
+      }
+      
     ],
   },
 
