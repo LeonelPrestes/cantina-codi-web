@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
         element: <Pending />,
       },
       {
-        path: "dasboard/create-coupon",
+        path: "dashboard/create-coupon",
         element: <CreateCoupon />
       }
       
