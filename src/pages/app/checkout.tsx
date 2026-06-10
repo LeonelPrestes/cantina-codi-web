@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createOrder } from "@/api/create-orders";
 import { createPreference } from "@/api/create-preference";
 import { Button } from "@/components/ui/button";
+import { validateCoupon } from "@/api/validate-coupon";
 import {
   Card,
   CardContent,
@@ -16,6 +17,10 @@ import { Label } from "@/components/ui/label";
 import { useCart } from "@/context/cart-context";
 
 export function Checkout() {
+  const [couponCode, setCouponCode] = useState("");
+  const [couponId, setCouponId] = useState<string | null>(null);
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);
+  const [couponLoading, setCouponLoading] = useState(false);
   const { cart, totalCart } = useCart();
   const navigate = useNavigate();
 
@@ -31,6 +36,26 @@ export function Checkout() {
   const canPay =
     cart.length > 0 && userName.trim().length >= 2 && emailOk && !loading;
 
+  async function handleApplyCoupon() {
+    try {
+      setCouponLoading(true);
+
+      const coupon = await validateCoupon({
+        code: couponCode.trim(),
+        total: totalCart,
+      });
+
+      setCouponId(coupon.id);
+      setCouponDiscount(coupon.discountAmount);
+    } catch (err) {
+      setCouponId(null);
+      setCouponDiscount(0);
+      alert(err instanceof Error ? err.message : "Erro ao aplicar cupom");
+    } finally {
+      setCouponLoading(false);
+    }
+  }
+
   async function handlePay() {
     if (!canPay) return;
 
@@ -41,6 +66,7 @@ export function Checkout() {
       const order = await createOrder({
         userName: userName.trim(),
         userEmail: userEmail.trim(),
+        coupon: couponId ?? undefined,
         items: cart.map((item) => ({
           productId: item.id,
           quantity: item.quantity,
@@ -118,10 +144,67 @@ export function Checkout() {
             )}
           </div>
 
+          <div className="space-y-2">
+            <Label className="text-zinc-200" htmlFor="coupon">
+              Cupom
+            </Label>
+
+            <div className="flex gap-2">
+              <Input
+                id="coupon"
+                value={couponCode}
+                onChange={(e) => {
+                  setCouponCode(e.target.value);
+                  setCouponId(null);
+                  setCouponDiscount(0);
+                }}
+                placeholder="Digite seu cupom"
+                className="text-zinc-100"
+              />
+
+              <Button
+                type="button"
+                disabled={couponLoading || couponCode.trim().length < 2}
+                onClick={handleApplyCoupon}
+              >
+                {couponLoading ? "..." : "Aplicar"}
+              </Button>
+            </div>
+
+            {couponId && (
+              <p className="text-sm text-green-400">
+                Cupom aplicado com sucesso.
+              </p>
+            )}
+          </div>
+
           <div className="flex justify-between text-zinc-400">
-            <span className="font-bold">Total</span>
+            <span>Subtotal</span>
             <span>
               {totalCart.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </span>
+          </div>
+
+          {couponDiscount > 0 && (
+            <div className="flex justify-between text-green-400">
+              <span>Desconto</span>
+              <span>
+                -{" "}
+                {couponDiscount.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </span>
+            </div>
+          )}
+
+          <div className="flex justify-between text-zinc-100 font-bold">
+            <span>Total</span>
+            <span>
+              {Math.max(totalCart - couponDiscount, 0).toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
               })}
@@ -135,7 +218,7 @@ export function Checkout() {
             disabled={!canPay}
             className="w-full bg-violet-500 hover:bg-violet-600 text-zinc-100 font-bold py-3 rounded-md cursor-pointer"
           >
-            {loading ? "Criando pagamento..." : "Pagar com Mercado Pago"}
+            {loading ? "Criando pagamento..." : "Pagar"}
           </Button>
 
           <Button variant="ghost" onClick={() => navigate("/cart")} className="w-full text-zinc-100 bg-zinc-800 hover:bg-zinc-900">
