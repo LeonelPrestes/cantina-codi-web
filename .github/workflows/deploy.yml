@@ -1,4 +1,4 @@
-name: Deploy Front In HostGator
+name: Deploy Front HostGator
 
 on:
   push:
