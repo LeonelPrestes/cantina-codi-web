@@ -33,7 +33,7 @@ export function Cart() {
         <CardHeader>
           <CardTitle className="text-white" >Resumo do pedido</CardTitle>
           <CardDescription>
-            Abaixo você pode ver o resumo do pedido
+            Abaixo você pode ver o resumo do pedido 
           </CardDescription>
         </CardHeader>
 

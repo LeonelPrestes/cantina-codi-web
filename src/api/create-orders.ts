@@ -16,6 +16,7 @@ const cartItemSchema = z.object({
 const createOrderBodySchema = z.object({
   userName: z.string(),
   userEmail: z.email(),
+  coupon: z.string().optional(),
   items: z.array(cartItemSchema),
 });
 
