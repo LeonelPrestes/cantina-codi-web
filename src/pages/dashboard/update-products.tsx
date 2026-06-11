@@ -131,7 +131,7 @@ export function UpdateProducts() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-zinc-200">
+              <Label htmlFor="name" className="text-sky-400/100">
                 Nome
               </Label>
               <Input
@@ -143,7 +143,7 @@ export function UpdateProducts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description" className="text-zinc-200">
+              <Label htmlFor="description" className="text-sky-400/100">
                 Descricao
               </Label>
               <Textarea
@@ -156,7 +156,7 @@ export function UpdateProducts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="imageUrl" className="text-zinc-200">
+              <Label htmlFor="imageUrl" className="text-sky-400/100">
                 URL da imagem
               </Label>
               <Input
@@ -173,7 +173,7 @@ export function UpdateProducts() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="price" className="text-zinc-200">
+                <Label htmlFor="price" className="text-sky-400/100">
                   Preco
                 </Label>
                 <Input
@@ -186,7 +186,7 @@ export function UpdateProducts() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="stock" className="text-zinc-200">
+                <Label htmlFor="stock" className="text-sky-400/100">
                   Estoque
                 </Label>
                 <Input
