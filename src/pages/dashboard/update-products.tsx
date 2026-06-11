@@ -122,7 +122,7 @@ export function UpdateProducts() {
 
       <Card className="bg-zinc-900 border border-gray-700/30">
         <CardHeader>
-          <CardTitle className="text-sky-400/100">Dados do produto</CardTitle>
+          <CardTitle className="text-">Dados do produto</CardTitle>
           <CardDescription>
             Todos os campos sao obrigatorios para atualizacao.
           </CardDescription>
@@ -151,7 +151,7 @@ export function UpdateProducts() {
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 placeholder="Descreva o produto..."
-                className="min-h-24 resize-none"
+                className="min-h-24 resize-none text-sky-400/100"
               />
             </div>
 
