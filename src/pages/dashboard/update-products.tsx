@@ -122,7 +122,7 @@ export function UpdateProducts() {
 
       <Card className="bg-zinc-900 border border-gray-700/30">
         <CardHeader>
-          <CardTitle className="text-">Dados do produto</CardTitle>
+          <CardTitle className="text-zinc-200">Dados do produto</CardTitle>
           <CardDescription>
             Todos os campos sao obrigatorios para atualizacao.
           </CardDescription>
@@ -139,6 +139,7 @@ export function UpdateProducts() {
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 placeholder="Ex: Coxinha de frango"
+                className="text-zinc-400"
               />
             </div>
 
@@ -151,7 +152,7 @@ export function UpdateProducts() {
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 placeholder="Descreva o produto..."
-                className="min-h-24 resize-none text-sky-400/100"
+                className="min-h-24 resize-none text-zinc-400"
               />
             </div>
 
@@ -165,6 +166,7 @@ export function UpdateProducts() {
                 onChange={(event) => setImageUrl(event.target.value)}
                 placeholder="https://exemplo.com/imagem.jpg"
                 inputMode="url"
+                className="text-zinc-400"
               />
               {imageUrl.length > 0 && !imageUrlOk && (
                 <p className="text-sm text-red-400">Digite uma URL valida.</p>
@@ -182,6 +184,7 @@ export function UpdateProducts() {
                   onChange={(event) => setPrice(event.target.value)}
                   placeholder="0,00"
                   inputMode="decimal"
+                  className="text-zinc-400"
                 />
               </div>
 
@@ -197,6 +200,7 @@ export function UpdateProducts() {
                   min={0}
                   step={1}
                   placeholder="0"
+                  className="text-zinc-400"
                 />
               </div>
             </div>
@@ -214,7 +218,7 @@ export function UpdateProducts() {
                 type="button"
                 variant="ghost"
                 onClick={() => navigate("/dashboard")}
-                className="w-full"
+                className="w-full text-zinc-400"
               >
                 Voltar para dashboard
               </Button>
