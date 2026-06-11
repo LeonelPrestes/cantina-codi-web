@@ -122,7 +122,7 @@ export function UpdateProducts() {
 
       <Card className="bg-zinc-900 border border-gray-700/30">
         <CardHeader>
-          <CardTitle>Dados do produto</CardTitle>
+          <CardTitle className="text-sky-400/100">Dados do produto</CardTitle>
           <CardDescription>
             Todos os campos sao obrigatorios para atualizacao.
           </CardDescription>
@@ -131,7 +131,7 @@ export function UpdateProducts() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-sky-400/100">
+              <Label htmlFor="name" className="text-zinc-200">
                 Nome
               </Label>
               <Input
@@ -143,7 +143,7 @@ export function UpdateProducts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description" className="text-sky-400/100">
+              <Label htmlFor="description" className="text-zinc-200">
                 Descricao
               </Label>
               <Textarea
@@ -156,7 +156,7 @@ export function UpdateProducts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="imageUrl" className="text-sky-400/100">
+              <Label htmlFor="imageUrl" className="text-zinc-200">
                 URL da imagem
               </Label>
               <Input
@@ -173,7 +173,7 @@ export function UpdateProducts() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="price" className="text-sky-400/100">
+                <Label htmlFor="price" className="text-zinc-200">
                   Preco
                 </Label>
                 <Input
@@ -186,7 +186,7 @@ export function UpdateProducts() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="stock" className="text-sky-400/100">
+                <Label htmlFor="stock" className="text-zinc-200">
                   Estoque
                 </Label>
                 <Input
